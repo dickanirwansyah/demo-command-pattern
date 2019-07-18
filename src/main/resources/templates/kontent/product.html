@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="header/index"></th:block>
 <body>
-$END$
+
+<div class="container">
+    <div class="container-fluide">
+
+        <th:block th:include="header/navigation"></th:block>
+
+        <div class="paddingTopTabel">
+            <table class="table table-bordered table-hover" id="tabel-product">
+                <thead>
+                <tr>
+                    <th>No/Id</th>
+                    <th>Name</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th width="200px">Action</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                <tr>
+                    <th>No/Id</th>
+                    <th>Name</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th width="200px">Action</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <th:block th:include="footer/index"></th:block>
+
+    </div>
+</div>
+
 </body>
 </html>

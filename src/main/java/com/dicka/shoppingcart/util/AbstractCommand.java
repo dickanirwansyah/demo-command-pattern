@@ -43,7 +43,6 @@ public abstract class AbstractCommand<RESULT, REQUEST extends ServiceRequest>
         }
     }
 
-
     public abstract RESULT doExecute(REQUEST request);
 
 }

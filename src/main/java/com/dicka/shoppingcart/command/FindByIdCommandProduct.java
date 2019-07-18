@@ -1,4 +1,8 @@
 package com.dicka.shoppingcart.command;
 
-public interface FindByIdCommandProduct {
+import com.dicka.shoppingcart.entity.Product;
+import com.dicka.shoppingcart.model.RequestUpdateProduct;
+import com.dicka.shoppingcart.util.Command;
+
+public interface FindByIdCommandProduct extends Command<Product, RequestUpdateProduct> {
 }

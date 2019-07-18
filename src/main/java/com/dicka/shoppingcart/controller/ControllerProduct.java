@@ -1,5 +1,6 @@
 package com.dicka.shoppingcart.controller;
 
+import com.dicka.shoppingcart.command.FindByIdCommandProduct;
 import com.dicka.shoppingcart.command.InsertCommandProduct;
 import com.dicka.shoppingcart.command.UpdateCommandProduct;
 import com.dicka.shoppingcart.entity.Product;
@@ -32,21 +33,13 @@ public class ControllerProduct {
 
     @GetMapping
     public ResponseEntity<List<Product>> listProduct(){
-
-        List<Product> products = new ArrayList<>();
-
-        List<Product> listProduct = productRepository.findAll();
-
-        listProduct.forEach(product -> {
-            products.add(product);
-        });
-
-        if (products.isEmpty()){
+        List<Product> productList = productRepository.findAll();
+        if (productList.isEmpty() || productList == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        return new ResponseEntity<>(productList, HttpStatus.OK);
     }
+
 
     @PostMapping
     public ResponseEntity<Object> createProduct(@RequestBody @Valid RequestProduct req,
@@ -70,6 +63,27 @@ public class ControllerProduct {
 
         executor.execute(InsertCommandProduct.class, req);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/by/{productId}")
+    public ResponseEntity<Object> findId(@PathVariable("productId") Long productId){
+
+        Product product = productRepository.findProductById(productId);
+
+        if (product == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+
+            RequestUpdateProduct byIdproduct = new RequestUpdateProduct();
+            byIdproduct.setProductId(product.getId());
+            byIdproduct.setName(product.getName());
+            byIdproduct.setDiscount(product.isDiscount());
+            byIdproduct.setPrice(product.getPrice());
+            byIdproduct.setStock(product.getStock());
+            byIdproduct.setStatus(product.isStatus());
+            executor.execute(FindByIdCommandProduct.class, byIdproduct);
+            return new ResponseEntity<>(byIdproduct, HttpStatus.OK);
+        }
     }
 
     @PutMapping(value = "/{productId}")
