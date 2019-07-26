@@ -1,5 +1,6 @@
 package com.dicka.shoppingcart.model;
 
+import com.dicka.shoppingcart.dummy.constant.ConstantVariable;
 import com.dicka.shoppingcart.util.ServiceRequest;
 
 import javax.validation.constraints.Max;
@@ -9,14 +10,14 @@ import javax.validation.constraints.NotNull;
 
 public class RequestProduct implements ServiceRequest{
 
-    @NotBlank(message = "name still null")
+    @NotBlank(message = ConstantVariable.PRODUCT_NAME_NULL)
     private String name;
 
-    @NotNull(message = "price still null")
+    @NotNull(message = ConstantVariable.PRODUCT_PRICE_NULL)
     private double price;
 
-    @Min(1)
-    @NotNull(message = "stock still null")
+    @Min(value = 5, message = ConstantVariable.PRODUCT_STOCK_MIN)
+    @NotNull(message = ConstantVariable.PRODUCT_STOCK_NULL)
     private int stock;
 
     private boolean status = true;
